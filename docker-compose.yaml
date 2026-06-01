@@ -1,0 +1,34 @@
+services:
+  maintenance-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # NEXT_PUBLIC_ variables are embedded into the JS bundle at build time,
+      # so they must be passed as build args — not only as runtime env vars.
+      args:
+        NEXT_PUBLIC_ADMIN_PIN:          ${NEXT_PUBLIC_ADMIN_PIN}
+        NEXT_PUBLIC_MODULES_ENDPOINT:   ${NEXT_PUBLIC_MODULES_ENDPOINT}
+        NEXT_PUBLIC_GOOGLE_FORM_URL:    ${NEXT_PUBLIC_GOOGLE_FORM_URL}
+
+    container_name: maintenance-app
+
+    ports:
+      - "3000:3000"
+
+    # Runtime environment variables (for server-side use or future API routes)
+    environment:
+      NODE_ENV:                       production
+      PORT:                           3000
+      NEXT_PUBLIC_ADMIN_PIN:          ${NEXT_PUBLIC_ADMIN_PIN}
+      NEXT_PUBLIC_MODULES_ENDPOINT:   ${NEXT_PUBLIC_MODULES_ENDPOINT}
+      NEXT_PUBLIC_GOOGLE_FORM_URL:    ${NEXT_PUBLIC_GOOGLE_FORM_URL}
+
+    restart: unless-stopped
+
+    # Basic health check — polls the app every 30 s
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/ || exit 1"]
+      interval: 30s
+      timeout:  10s
+      retries:  3
+      start_period: 20s
