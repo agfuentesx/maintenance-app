@@ -1,14 +1,6 @@
-<<<<<<< HEAD
 # Sistema de Mantenimiento
 
 Panel de control para monitorear el estado de mantenimiento de módulos industriales por línea.
-
-## Tecnologías
-
-- **Next.js 14** (App Router)
-- **TypeScript**
-- **Tailwind CSS**
-- **React Context** para autenticación
 
 ## Configuración
 
@@ -28,11 +20,11 @@ npm run dev
 
 ## Lógica de estado de módulos
 
-| Condición | Estado | Color |
-|-----------|--------|-------|
-| Días hasta próximo mantenimiento > frecuencia | ✅ Bien | Verde |
-| 0 ≤ días hasta próximo ≤ frecuencia | ⚠ Requiere mantenimiento | Naranja |
-| Días hasta próximo < 0 (fecha ya pasó) | ❌ Mantenimiento vencido | Rojo |
+|                  Condición                    | Estado | Color |
+|-----------------------------------------------|--------|-------|
+| Días hasta próximo mantenimiento > frecuencia | Bien | Verde |
+| 0 ≤ días hasta próximo ≤ frecuencia | Requiere mantenimiento | Naranja |
+| Días hasta próximo < 0 (fecha ya pasó) | Mantenimiento vencido | Rojo |
 
 ## Perfiles de usuario
 
@@ -44,12 +36,10 @@ npm run dev
 
 ## Seguridad
 
-> ⚠️ El PIN de admin en `NEXT_PUBLIC_` es visible en el bundle del cliente.
-> Para producción, mueve la validación al servidor usando una API Route de Next.js.
+El PIN se configura como variable de entorno
 
 ## Build de producción
 
 ```bash
-npm run build
-npm start
+docker compose up -d
 ```
