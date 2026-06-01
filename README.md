@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Sistema de Mantenimiento
 
 Panel de control para monitorear el estado de mantenimiento de módulos industriales por línea.
@@ -112,3 +113,6 @@ Abre [http://localhost:3000](http://localhost:3000)
 npm run build
 npm start
 ```
+=======
+# maintenance-app
+>>>>>>> ff223955a67f0f3a77333a5754d1c27a3dc3b725
