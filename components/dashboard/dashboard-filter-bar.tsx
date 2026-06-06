@@ -131,12 +131,13 @@ function FilterSelect({ value, onChange, disabled, children, "aria-label": ariaL
       onChange={(e) => onChange(e.target.value)}
       disabled={disabled}
       aria-label={ariaLabel}
+      style={{ backgroundColor: "#0d1525", colorScheme: "dark" }}
       className={`
         px-3 py-2 rounded-lg text-xs font-mono border transition-all outline-none cursor-pointer
-        bg-white/3 text-white/60 hover:bg-white/6 hover:text-white/80
+        text-white/60 hover:text-white/80
         disabled:opacity-30 disabled:cursor-not-allowed
         ${isActive
-          ? "border-brand-500/30 bg-brand-500/8 text-brand-300"
+          ? "border-brand-500/30 text-brand-300"
           : "border-white/8"
         }
       `}

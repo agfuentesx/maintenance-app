@@ -42,7 +42,6 @@ function DashboardContent() {
   return (
     <>
       <TopBar
-        title="Dashboard"
         onMenuToggle={toggleMenu}
         actions={refreshButton}
       />

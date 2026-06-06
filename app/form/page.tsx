@@ -12,7 +12,7 @@ function FormContent() {
 
   return (
     <>
-      <TopBar title="Formulario" onMenuToggle={toggleMenu} />
+      <TopBar onMenuToggle={toggleMenu} />
       <div className="p-4 md:p-6 h-[calc(100vh-3.5rem)] flex flex-col">
         <p className="text-white/30 font-mono text-xs uppercase tracking-widest mb-4">
           Registro de mantenimiento

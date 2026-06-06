@@ -3,7 +3,7 @@ import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
 
 export const metadata: Metadata = {
-  title: "Sistema de Mantenimiento",
+  title: "Sistema de lineas",
   description: "Panel de control de mantenimiento de módulos industriales",
 };
 

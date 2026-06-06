@@ -3,7 +3,7 @@
 import { MenuIcon } from "@/components/ui/icons";
 
 interface TopBarProps {
-  title: string;
+  title?: string;
   onMenuToggle: () => void;
   actions?: React.ReactNode;
 }

@@ -15,7 +15,7 @@ function ProfileContent() {
 
   return (
     <>
-      <TopBar title="Perfil" onMenuToggle={toggleMenu} />
+      <TopBar onMenuToggle={toggleMenu} />
       <div className="p-4 md:p-6 max-w-lg">
         {/* Avatar / role card */}
         <div className="bg-white/3 border border-white/8 rounded-2xl p-6 mb-4 flex items-center gap-5">
