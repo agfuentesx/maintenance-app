@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { useModules } from "@/hooks/use-modules";
@@ -9,17 +9,24 @@ import { TopBar } from "@/components/layout/top-bar";
 import { ModuleCard } from "@/components/dashboard/module-card";
 import { DashboardSummary } from "@/components/dashboard/dashboard-summary";
 import { EmptyState } from "@/components/dashboard/empty-state";
+import { DashboardFilterBar, applyFilters } from "@/components/dashboard/dashboard-filter-bar";
+import type { DashboardFilters } from "@/components/dashboard/dashboard-filter-bar";
 import { RefreshIcon } from "@/components/ui/icons";
+
+const EMPTY_FILTERS: DashboardFilters = { linea: "", module: "", status: "" };
 
 function DashboardContent() {
   const toggleMenu = useMobileMenu();
   const { modules, isLoading, error, lastUpdated, refresh } = useModules();
+  const [filters, setFilters] = useState<DashboardFilters>(EMPTY_FILTERS);
 
-  // Auto-load on mount
   useEffect(() => {
     refresh();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const filteredModules = applyFilters(modules, filters);
+  const isFiltering = filters.linea !== "" || filters.module !== "" || filters.status !== "";
 
   const refreshButton = (
     <button
@@ -54,15 +61,39 @@ function DashboardContent() {
           </div>
         )}
 
-        {/* Summary stats */}
+        {/* Summary stats — always based on all modules, not the filtered set */}
         {modules.length > 0 && <DashboardSummary modules={modules} />}
 
-        {/* Module cards or empty state */}
+        {/* Filters */}
+        {modules.length > 0 && (
+          <DashboardFilterBar
+            modules={modules}
+            filters={filters}
+            onChange={setFilters}
+          />
+        )}
+
+        {/* No-results message when filters produce an empty set */}
+        {isFiltering && filteredModules.length === 0 && modules.length > 0 && (
+          <div className="py-16 text-center">
+            <p className="text-white/30 font-body text-sm mb-1">
+              Sin resultados para los filtros aplicados
+            </p>
+            <button
+              onClick={() => setFilters(EMPTY_FILTERS)}
+              className="mt-3 text-xs font-mono text-brand-400 hover:text-brand-300 transition-colors"
+            >
+              Limpiar filtros
+            </button>
+          </div>
+        )}
+
+        {/* Module cards or initial empty state */}
         {modules.length === 0 && !isLoading ? (
           <EmptyState onRefresh={refresh} isLoading={isLoading} />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {modules.map((mod, i) => (
+            {filteredModules.map((mod, i) => (
               <div
                 key={mod.id}
                 style={{ animationDelay: `${i * 60}ms` }}
